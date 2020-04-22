@@ -9,6 +9,7 @@ namespace sate_Censes
     {
         public CsvState(string Path) : base(Path)
         {
+         
             
         }
     }

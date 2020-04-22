@@ -1,14 +1,12 @@
 ﻿using LumenWorks.Framework.IO.Csv;
 using stateCensusAnaliser;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
 namespace sate_Censes
 {
     public class BaseStateCensus
     {
+
          string Path { get; set; }
         public BaseStateCensus(string Path)
         {
