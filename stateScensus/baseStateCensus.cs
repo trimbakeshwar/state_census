@@ -6,25 +6,21 @@ namespace sate_Censes
 {
     public class BaseStateCensus
     {
-
-         string Path { get; set; }
+        string Path { get; set; }
         public BaseStateCensus(string Path)
         {
             this.Path = Path;
         }
-
         /// <summary>
         /// load the file and find number of record 
         /// check for delimeter and handle delimeter exception
         /// </summary>
         /// <param name="path">path of file</param>
         /// <returns></returns>
-
         public int ReadMethod(char userdelimeter)
         {
             try
             {
-
                 //get file information from path
                 FileInfo e = new FileInfo(Path);
                 Console.WriteLine(e);
@@ -37,7 +33,6 @@ namespace sate_Censes
                 {
                     throw new StateCensusException(StateCensusException.ExceptionType.WRONG_FILE, "enter proper file");
                 }
-
                 int numberOfRecord = 0;
                 //read the data from file
                 using StreamReader read = new StreamReader(this.Path);
@@ -104,9 +99,6 @@ namespace sate_Censes
             {
                 throw new StateCensusException(StateCensusException.ExceptionType.HEADER_NAME_NOT_SAME, e.Message);
             }
-
         }
-
-
     }
 }
