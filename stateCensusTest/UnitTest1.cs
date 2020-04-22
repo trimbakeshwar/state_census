@@ -4,11 +4,16 @@ using stateCensusAnaliser;
 
 namespace stateCencesTesting
 {
-    public class Tests
+    public class TestsForStateCensusData
     {
+        //path of file StateCensusData.csv
+        static string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
+        //create a object of stateCensusAnalyser class 
+        stateCensusAnalyser read = new stateCensusAnalyser(pathStateCensusData);
         [SetUp]
         public void Setup()
         {
+          
         }
         /// <summary>
         /// check for number of record 
@@ -16,12 +21,8 @@ namespace stateCencesTesting
         [Test]
         public void TestForNumberOfRecord()
         {
-            //create a object of stateCensusAnalyser class 
-            stateCensusAnalyser read = new stateCensusAnalyser();
-            //give the  path of csv file
-            string path = @"D:\trimbak\state analys\StateCensusData.csv";
             //call the readmethod and it return the number of record
-            int record = read.ReadMethod(path, ',');
+            int record = read.ReadMethod(',');
             Assert.AreEqual(29, record);
         }
         /// <summary>
@@ -32,14 +33,13 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                stateCensusAnalyser read = new stateCensusAnalyser();
-                //give the  path of csv file
-                string path = @"D:\trimbak\state analys\StateCensusData.csv";
+                //give the  path of not available csv file
+                string path = @"D:\trimbak\state analys\StatesusData.csv";
                 //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ',');
+                stateCensusAnalyser ReadForStateCensus = new stateCensusAnalyser(path);
+                int record = ReadForStateCensus.ReadMethod(',');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("file is not present on this location", e.Message);
             }
@@ -52,14 +52,14 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                stateCensusAnalyser read = new stateCensusAnalyser();
                 //chenge file type csv to txt and check
                 string path = @"D:\trimbak\state analys\StateCensusData.txt";
+                //send the file path
+                stateCensusAnalyser ReadForStateCensus = new stateCensusAnalyser(path);
                 //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ',');
+                int record = ReadForStateCensus.ReadMethod(',');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("enter proper file", e.Message);
             }
@@ -69,14 +69,9 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                stateCensusAnalyser read = new stateCensusAnalyser();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCensusData.csv";
-                //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ';');
+                int record = read.ReadMethod(';');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("wrong delimeter, please enter proper delimeter", e.Message);
             }
@@ -86,23 +81,18 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                stateCensusAnalyser read = new stateCensusAnalyser();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCensusData.csv";
-                //call the numberofheder and it return the heder
                 //expected output
                 string[] expectedHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
                 //check for header name not proper
                 string[] userHeader = { "State", "Population", "AreaInSqKm", "DensitySqKm" };
-                string[] header = read.numberOfHeader(path, userHeader);
+                string[] header = read.numberOfHeader(userHeader);
                 //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
                 for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
                 }
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("header name is not same", e.Message);
             }
@@ -115,11 +105,6 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                stateCensusAnalyser read = new stateCensusAnalyser();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCensusData.csv";
-                //call the readmethod and it return the number of record
                 //expected array
                 string[] expectedHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
                 //pass wrong length array
@@ -127,18 +112,31 @@ namespace stateCencesTesting
                 //throws the length not proper exception
                 //if length is proper and name is proper then return header names
                 //and check with expected output
-                string[] header = read.numberOfHeader(path, userHeader);
+                string[] header = read.numberOfHeader(userHeader);
                 for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
                 }
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 //if string and massage same then pass the test
                 Assert.AreEqual("header length is not same", e.Message);
             }
 
+        }
+    }
+
+    class CsvStateCode
+    {
+        //path of file StateCode.csv
+        static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+        //create object of csvState class
+        CsvState ReadForCsvStateCode = new CsvState(PathOfCsvStateCode);
+        [SetUp]
+        public void Setup()
+        {
+            
         }
         /// <summary>
         /// check for number of record csvstate code
@@ -146,12 +144,8 @@ namespace stateCencesTesting
         [Test]
         public void TestForNumberOfRecordincsvStateCode()
         {
-            //create a object of stateCensusAnalyser class 
-            CsvState read = new CsvState();
-            //give the  path of csv file
-            string path = @"D:\trimbak\state analys\StateCode.csv";
             //call the readmethod and it return the number of record
-            int record = read.ReadMethod(path, ',');
+            int record = ReadForCsvStateCode.ReadMethod( ',');
             Assert.AreEqual(37, record);
         }
         /// <summary>
@@ -162,14 +156,14 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                CsvState read = new CsvState();
-                //give the  path of csv file
-                string path = @"D:\trimbak\state analys\StateCode.csv";
+                //give the  path of not existing csv file
+                string Path = @"D:\trimbak\state analys\Statee.csv";
+                //create object fo csv reder by using local file path 
+                CsvState ReadForCsvState = new CsvState(Path);
                 //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ',');
+                int record = ReadForCsvState.ReadMethod(',');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("file is not present on this location", e.Message);
             }
@@ -182,14 +176,14 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                CsvState read = new CsvState();
                 //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCode.txt";
+                string Path = @"D:\trimbak\state analys\StateCode.txt";
+                //create object fo csv reder by using local file path 
+                CsvState ReadForCsvState = new CsvState(Path);
                 //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ',');
+                int record = ReadForCsvState.ReadMethod( ',');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("enter proper file", e.Message);
             }
@@ -201,15 +195,12 @@ namespace stateCencesTesting
         public void TestForWrongDelimeterExceptionForStateCode()
         {
             try
-            {
-                //create a object of stateCensusAnalyser class 
-                CsvState read = new CsvState();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCode.csv";
+            {               
                 //call the readmethod and it return the number of record
-                int record = read.ReadMethod(path, ';');
+                //send wrong delimeter for check delimeter exception
+                int record = ReadForCsvStateCode.ReadMethod(';');
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("wrong delimeter, please enter proper delimeter", e.Message);
             }
@@ -222,23 +213,18 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                CsvState read = new CsvState();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCode.csv";
-                //call the numberofheder and it return the heder
                 //expected output
                 string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
                 //check for header name not proper
                 string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column" };
-                string[] header = read.numberOfHeader(path, userHeader);
+                string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
                 //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
                 for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
                 }
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 Assert.AreEqual("header name is not same", e.Message);
             }
@@ -251,11 +237,6 @@ namespace stateCencesTesting
         {
             try
             {
-                //create a object of stateCensusAnalyser class 
-                CsvState read = new CsvState();
-                //chenge file type csv to txt and check
-                string path = @"D:\trimbak\state analys\StateCode.csv";
-                //call the readmethod and it return the number of record
                 //expected array
                 string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
                 //pass wrong length array
@@ -263,13 +244,13 @@ namespace stateCencesTesting
                 //throws the length not proper exception
                 //if length is proper and name is proper then return header names
                 //and check with expected output
-                string[] header = read.numberOfHeader(path, userHeader);
+                string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
                 for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
                 }
             }
-            catch (stateCensusException e)
+            catch (StateCensusException e)
             {
                 //if string and massage same then pass the test
                 Assert.AreEqual("header length is not same", e.Message);

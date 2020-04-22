@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sate_Censes;
+using System;
 
 namespace stateScensus
 {
@@ -6,7 +7,7 @@ namespace stateScensus
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

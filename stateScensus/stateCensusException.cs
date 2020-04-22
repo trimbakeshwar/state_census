@@ -7,7 +7,7 @@ namespace stateCensusAnaliser
         /// <summary>
         /// create customarised enum class for handle customarised exception
         /// </summary>
-        public class stateCensusException : Exception
+        public class StateCensusException : Exception
         {
             public enum ExceptionType
             {
@@ -18,8 +18,8 @@ namespace stateCensusAnaliser
                 HEADER_NAME_NOT_SAME,
                 HEADER_LENGTH_NOT_SAME
             }
-            ExceptionType type;
-            public stateCensusException(ExceptionType type, string message) : base(message)
+            public  ExceptionType type;
+            public StateCensusException(ExceptionType type, string message) : base(message)
             {
                 this.type = type;
             }
