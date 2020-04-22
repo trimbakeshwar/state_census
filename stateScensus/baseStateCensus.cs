@@ -11,45 +11,7 @@ namespace sate_Censes
         public BaseStateCensus(string Path)
         {
             this.Path = Path;
-        }
-
-        public void CsvBuilder()
-        {
-            try
-            {
-
-
-                using StreamReader read = new StreamReader(this.Path);
-                //and load the data on csvreader by using CsvReader
-                using CsvReader csvreader = new CsvReader(read, true);
-                Console.WriteLine(csvreader);
-                //count field
-                int fieldCount = csvreader.FieldCount;
-                //get fields of files
-                string[] headers = csvreader.GetFieldHeaders();
-                //add array list 
-                List<string[]> record = new List<string[]>();
-                while (csvreader.ReadNextRecord())
-                {
-                    string[] tempRecord = new string[fieldCount];
-                    csvreader.CopyCurrentRecordTo(tempRecord);
-                    record.Add(tempRecord);
-                    
-                    // return (headers, record);
-                }
-                foreach (string[] Record in record)
-                {
-                    Console.WriteLine(" ", Record);
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-           
-            
-        
+        }  
         /// <summary>
         /// load the file and find number of record 
         /// check for delimeter and handle delimeter exception
