@@ -7,6 +7,6 @@ namespace stateScensus
     public interface InterfaceForStateCensus
     {
        
-        public dynamic readData(string Path);
+        public void readData(string Path);
     }
 }

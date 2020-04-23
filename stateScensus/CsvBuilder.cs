@@ -11,13 +11,16 @@ namespace stateScensus
 /// </summary>
     public class CsvBuilder : InterfaceForStateCensus
     {
+        public string[] record;
+        public string[] headers;
+        public int numberOfRecords;
         /// <summary>
         /// read the data from file
         /// </summary>
         /// <param name="Path">path of file</param>
 
         /// <returns>record</returns>
-        public dynamic readData(string Path)
+        public void readData(string Path)
         {
             
             try
@@ -41,19 +44,12 @@ namespace stateScensus
                     csvreader.CopyCurrentRecordTo(tempRecord);
                     //add temprecord in array list
                     record.Add(tempRecord);
-                    numberOfRecords++;
-                    foreach (string[] Record in record)
-                    {
-                        //print the record
-                        Console.WriteLine(" ", Record);
-                    }
-                  
+                    numberOfRecords++;                  
                 }
                 if(numberOfRecords==0)
                 {
                     throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, "file has not any data or record");
                 }
-                return (record, headers, numberOfRecords);
             }
             catch(StateCensusException e)
             {
@@ -76,6 +72,19 @@ namespace stateScensus
                 throw new Exception(e.Message);
             }
         }
+        public string[] GetRecord()
+        {
+            return record;
+        }
+        public string[] GetHeader()
+        {
+            return headers;
+        }
+        public int GetNumberOfRecord()
+        {
+            return numberOfRecords;
+        }
+
 
     }
 }
