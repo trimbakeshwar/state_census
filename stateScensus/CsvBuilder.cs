@@ -3,15 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using stateCensusAnaliser;
 
 namespace stateScensus
-{
-    class CsvBuilder : InterfaceForStateCensus
+{/// <summary>
+/// csv bilder class for reding or fetching data from file 
+/// </summary>
+    public class CsvBuilder : InterfaceForStateCensus
     {
+        /// <summary>
+        /// read the data from file
+        /// </summary>
+        /// <param name="Path">path of file</param>
+
+        /// <returns>record</returns>
         public dynamic readData(string Path)
         {
-            //path of file StateCensusData.csv
-            // Path = @"D:\trimbak\state analys\StateCensusData.csv";
+            
             try
             {
                 using StreamReader read = new StreamReader(Path);
@@ -25,24 +33,47 @@ namespace stateScensus
                 //add array list 
                 List<string[]> record = new List<string[]>();
                 int numberOfRecords = 0;
+                //iterate the record from csv file to temp record line by line
                 while (csvreader.ReadNextRecord())
                 {
                     string[] tempRecord = new string[fieldCount];
+                    //copy csv file record in temp record line by line
                     csvreader.CopyCurrentRecordTo(tempRecord);
+                    //add temprecord in array list
                     record.Add(tempRecord);
                     numberOfRecords++;
                     foreach (string[] Record in record)
                     {
+                        //print the record
                         Console.WriteLine(" ", Record);
                     }
                   
                 }
+                if(numberOfRecords==0)
+                {
+                    throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, "file has not any data or record");
+                }
                 return (record, headers, numberOfRecords);
             }
-            catch (Exception e)
+            catch(StateCensusException e)
             {
                 Console.WriteLine(e.Message);
-                return e.Message;
+                throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, e.Message);
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+                throw new FileNotFoundException(e.Message);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine(e.Message);
+                throw new IndexOutOfRangeException(e.Message);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw new Exception(e.Message);
             }
         }
 

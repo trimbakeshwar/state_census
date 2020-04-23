@@ -4,7 +4,7 @@ using System.Text;
 
 namespace stateScensus
 {
-    interface InterfaceForStateCensus
+    public interface InterfaceForStateCensus
     {
        
         public dynamic readData(string Path);
