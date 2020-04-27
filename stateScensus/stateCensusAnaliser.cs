@@ -7,15 +7,11 @@ namespace sate_Censes
 {
     public class stateCensusAnalyser:BaseStateCensus
     {
-       
-       
-        public stateCensusAnalyser(string Path) : base(Path)
-        {
-           
-        }
-       
-        
-
+        /// <summary>
+        /// call base class and send path of state scences data
+        /// </summary>
+        /// <param name="Path"></param>
+        public stateCensusAnalyser(string Path) : base(Path) { }
     }
 }
 

@@ -9,7 +9,6 @@ namespace stateScensus
         static void Main(string[] args)
         {
 
-           
         }
     }
 }

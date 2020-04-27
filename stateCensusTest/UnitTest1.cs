@@ -149,7 +149,7 @@ namespace stateCencesTesting
         }
     }
 
-    class CsvStateCode
+    public class CsvStateCode
     {
         //path of file StateCode.csv
         static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
@@ -235,9 +235,9 @@ namespace stateCencesTesting
         {
 
             //expected output
-            string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+            string[] expectedHeader = { "SrNo", "StateName", "TIN", "StateCode" };
             //check for header name not proper
-            string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+            string[] userHeader = { "SrNo", "StateName", "TIN", "StateCode" };
             string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
             //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
              for (int i = 0; i < header.Length; i++)
@@ -254,9 +254,9 @@ namespace stateCencesTesting
             try
             {
                 //expected output
-                string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+                string[] expectedHeader = { "SrNo", "StateName", "TIN", "StateCode" };
                 //check for header name not proper
-                string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column" };
+                string[] userHeader = { "SrNo", "StateName", "TIN", "StateCo"};
                 string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
                 //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
                /* for (int i = 0; i < header.Length; i++)
@@ -278,9 +278,9 @@ namespace stateCencesTesting
             try
             {
                 //expected array
-                string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+                string[] expectedHeader = { "SrNo", "StateName", "TIN", "StateCode" };
                 //pass wrong length array
-                string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode" };
+                string[] userHeader = { "SrNo", "StateName", "TIN" };
                 //throws the length not proper exception
                 //if length is proper and name is proper then return header names
                 //and check with expected output
@@ -299,12 +299,12 @@ namespace stateCencesTesting
         }
 
     }
-    public class TestsForCsvBuilder
+    public class TestsForCsvStateDataByCsvBuilder
     {
         //path of file StateCensusData.csv 
-        static string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
+         static string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
         //create a object of stateCensusAnalyser class 
-        CsvBuilder builder = new CsvBuilder();
+       
         [SetUp]
         public void Setup()
         {
@@ -314,7 +314,7 @@ namespace stateCencesTesting
         /// check for number of record 
         /// </summary>
         [Test]
-        public void checkForHeadersInCsvBuilder()
+        public void checkForHeadersInCsvData()
         {
             //expected headers name
             string[] expectedHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
@@ -326,14 +326,15 @@ namespace stateCencesTesting
             //call the read data and retun the output dynamically and store in var
             //return tuple this is new concept to return mulltiple values
             //and get pertcular value Item1,Item2,Item3,Item4
-            var output=builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            var output = state.getHeaders();
 
             //my itoe three is heeders name
             //if expected output and real output cheack if equal then pass the test
             for (int i = 0; i < expectedHeader.Length; i++)
             {
                
-                Assert.AreEqual(expectedHeader[i], output.Item3[i]);
+                Assert.AreEqual(expectedHeader[i], output[i]);
             }
 
         }
@@ -341,7 +342,7 @@ namespace stateCencesTesting
         /// check for first state
         /// </summary>
         [Test]
-        public void checkForFirstStateCsvBuilder()
+        public void checkForFirstStateCsvData()
         {
             //expected output
             var expectedState = "Andhra Pradesh";  
@@ -351,9 +352,12 @@ namespace stateCencesTesting
             //sorting apply on this column
             int columnNumber = 0;
             //call readdata and return output store in var output 
-            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
             //second output is store in firststate first sorted record
-            var firstState = output.Item2[0];
+
+            var firstState = state.getSortedRecord();
+            firstState = firstState[0];
             //if equal then pass 
             Assert.AreEqual(expectedState, firstState);
         }
@@ -361,7 +365,7 @@ namespace stateCencesTesting
         /// check for last state in alphabetical order
         /// </summary>
         [Test]
-        public void checkForLastStateCsvBuilder()
+        public void checkForLastStateCsvData()
         {
             //expected output
             var expectedState = "West Bengal";
@@ -370,32 +374,216 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 0;
             //call readdata and return output store in var output 
-            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
-            //itome three is number of record 29 and send to last record index
-            var lastRecordIndex = output.Item3;
-            //itome 2 is sorted list an in sorted list last state in alphabetical order
-            var LastState = output.Item2;
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //geting number of record
+            var lastRecordIndex = state.getNumberOfRecrd();
+            //geting sorted record
+            var LastState = state.getSortedRecord();
+            LastState = LastState[lastRecordIndex];
             //if same then pass
-            Assert.AreEqual(expectedState, LastState[lastRecordIndex]);
+            Assert.AreEqual(expectedState, LastState);
         }
         /// <summary>
         /// 
         /// </summary>
         [Test]
-        public void checkForNumberOfRecordsInCsvBuilder()
+        public void checkForNumberOfRecordsInCsvData()
         {
             //send 1 for not sorting and not json format
             int jasonForm = 1;
             int sort = 1;
             int columnNumber = 0;
             //call readdata and return output store in var output 
-            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
             //itome three is number of record
-            var numberOfRecord = output.Item2;
+            var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord);
         }
+        /// <summary>
+        /// check for json formated first state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatFirstState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 0;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get first string of record
+            string first = sortedList[0];
+            Assert.AreEqual("Andhra Pradesh", first);
+
+        }
+        /// <summary>
+        /// check for json formated first state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatLastState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 0;
+            //call constructor of csv file
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get last string of record
+            string lastState = sortedList[state.getNumberOfRecrd()];
+            Assert.AreEqual("West Bengal", lastState);
+
+        }
 
 
+
+    }
+    public class TestsForCsvCodeDataByCsvBuilder
+    {
+        //path of file StateCensusData.csv 
+       static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+
+        //create a object of stateCensusAnalyser class 
+
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+        /// <summary>
+        /// check for number of record 
+        /// </summary>
+        [Test]
+        public void checkForHeadersInCsvCode()
+        {
+            //expected headers name
+            string[] expectedHeader = { "SrNo", "StateName", "TIN", "StateCode" };
+            //assign parameters 1 for not run
+            int jasonForm = 1;
+            int sort = 1;
+            //send sorting column number
+            int columnNumber = 3;
+            //call the read data and retun the output dynamically and store in var
+           
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //geting heders name by this function
+            var output = state.getHeaders();
+
+            //my itoe three is heeders name
+            //if expected output and real output cheack if equal then pass the test
+            for (int i = 0; i < expectedHeader.Length; i++)
+            {
+
+                Assert.AreEqual(expectedHeader[i], output[i]);
+            }
+
+        }
+        /// <summary>
+        /// check for first state
+        /// </summary>
+        [Test]
+        public void checkForFirstStateCsvCode()
+        {
+            //expected output
+            var expectedState = "AD";
+            //send o for sorting and json format
+            int jasonForm = 0;
+            int sort = 0;
+            //sorting apply on this column
+            int columnNumber = 3;
+            //call readdata and return output store in var output 
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //get sorted record from csv code
+            var firstState = state.getSortedRecord();
+            firstState = firstState[0];
+            //if equal then pass 
+            Assert.AreEqual(expectedState, firstState);
+        }
+        /// <summary>
+        /// check for last state in alphabetical order
+        /// </summary>
+        [Test]
+        public void checkForLastStateCsvCode()
+        {
+            //expected output
+            var expectedState = "WB";
+            //send 0 for sorting and json format
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+            //call readdata and return output store in var output 
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //last record index get from number of record
+            var lastRecordIndex = state.getNumberOfRecrd();
+            //get sorted list last state in alphabetical order
+            var LastState = state.getSortedRecord();
+            //get last record from sorted file
+            LastState = LastState[lastRecordIndex];
+            //if same then pass
+            Assert.AreEqual(expectedState, LastState);
+        }
+        /// <summary>
+        /// check number of record in csv code
+        /// </summary>
+        [Test]
+        public void checkForNumberOfRecordsInCsvCode()
+        {
+            //send 1 for not sorting and not json format
+            int jasonForm = 1;
+            int sort = 1;
+            int columnNumber = 3;
+            //call readdata and return output store in var output 
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //get number of record from csv code
+            var numberOfRecord = state.getNumberOfRecrd();
+            //if same then pass
+            Assert.AreEqual(37, numberOfRecord);
+        }
+       /// <summary>
+       /// check for json formated first state
+       /// </summary>
+        [Test]
+        public void CheckForJsonFormatFirstState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+           //call the constructor
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get first string of record
+            string first = sortedList[0];
+            Assert.AreEqual("AD", first);
+           
+        }
+        /// <summary>
+        /// check for json formated first state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatLastState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+            //call constructor of csv file
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get last string of record
+            string lastState = sortedList[state.getNumberOfRecrd()];
+            Assert.AreEqual("WB", lastState);
+
+        }
     }
 }

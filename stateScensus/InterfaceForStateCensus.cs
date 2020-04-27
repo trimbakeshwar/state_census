@@ -7,6 +7,6 @@ namespace stateScensus
     public interface InterfaceForStateCensus
     {
         
-        public dynamic readData(string Path,int jsonForm,int sort,int columnNumber);
+        public dynamic readData();
     }
 }

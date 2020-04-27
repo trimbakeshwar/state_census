@@ -11,9 +11,19 @@ namespace stateScensus
 {/// <summary>
 /// csv bilder class for reding or fetching data from file 
 /// </summary>
-    public class CsvBuilder : InterfaceForStateCensus
+    public class CsvBuilder 
     {
-
+        string Path;
+        int jsonForm;
+        int sort;
+        int columnNumber;
+        public CsvBuilder(string Path, int jsonForm, int sort, int columnNumber)
+        {
+            this.Path=Path;
+            this.jsonForm=jsonForm;
+            this.sort=sort;
+            this.columnNumber=columnNumber;
+        }
         /// <summary>
         /// read the data from csv file
         /// </summary>
@@ -22,7 +32,7 @@ namespace stateScensus
         /// <param name="sort">if user want be sorted output then sort by sending 0</param>
         /// <param name="columnNumber">send the column number u want to sirt</param>
         /// <returns>it return 4 values diff datatype </returns>
-        public dynamic readData(string Path, int jsonForm, int sort, int columnNumber)
+        public dynamic readData()
         {
             //declear number of record is 0
             int numberOfRecord = 0;
@@ -73,7 +83,7 @@ namespace stateScensus
                 {
                     var jsonFormdata = JsonSerializer.Serialize(sortelist);  
                     //return data dynamically
-                    return (record, sortelist, numberOfRecord, headers, jsonFormdata);
+                    return (record,  numberOfRecord, headers, sortelist, jsonFormdata);
                    
                 }
                 return (record, numberOfRecord, headers);
