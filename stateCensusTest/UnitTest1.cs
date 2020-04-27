@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
 using NUnit.Framework;
 using sate_Censes;
 using stateCensusAnaliser;
+using stateScensus;
 
 namespace stateCencesTesting
 {
@@ -95,6 +97,26 @@ namespace stateCencesTesting
             catch (StateCensusException e)
             {
                 Assert.AreEqual("header name is not same", e.Message);
+            }
+        }
+        /// <summary>
+        /// check for same header name for state code
+        /// </summary>
+        [Test]
+        public void checkForHeaderNameSame()
+        {
+
+            //expected array
+            string[] expectedHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
+            //pass wrong length array
+            string[] userHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
+            //throws the length not proper exception
+            //if length is proper and name is proper then return header names
+            //and check with expected output
+            string[] header = read.numberOfHeader(userHeader);
+            for (int i = 0; i < header.Length; i++)
+            {
+                Assert.AreEqual(expectedHeader[i], header[i]);
             }
         }
         /// <summary>
@@ -206,6 +228,24 @@ namespace stateCencesTesting
             }
         }
         /// <summary>
+        /// check for same header name for state code
+        /// </summary>
+        [Test]
+        public void checkForHeaderNameSameForStateCode()
+        {
+
+            //expected output
+            string[] expectedHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+            //check for header name not proper
+            string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column5" };
+            string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
+            //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
+             for (int i = 0; i < header.Length; i++)
+             {
+                 Assert.AreEqual(expectedHeader[i], header[i]);
+             }
+        }
+        /// <summary>
         /// check for wrong header name for state code
         /// </summary>
         [Test]
@@ -219,10 +259,10 @@ namespace stateCencesTesting
                 string[] userHeader = { "SrNo", "State", "Name", "TIN", "StateCode", "Column" };
                 string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
                 //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
-                for (int i = 0; i < header.Length; i++)
+               /* for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
-                }
+                }*/
             }
             catch (StateCensusException e)
             {
@@ -245,10 +285,10 @@ namespace stateCencesTesting
                 //if length is proper and name is proper then return header names
                 //and check with expected output
                 string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
-                for (int i = 0; i < header.Length; i++)
+            /*    for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
-                }
+                }*/
             }
             catch (StateCensusException e)
             {
@@ -257,5 +297,105 @@ namespace stateCencesTesting
             }
 
         }
+
+    }
+    public class TestsForCsvBuilder
+    {
+        //path of file StateCensusData.csv 
+        static string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
+        //create a object of stateCensusAnalyser class 
+        CsvBuilder builder = new CsvBuilder();
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+        /// <summary>
+        /// check for number of record 
+        /// </summary>
+        [Test]
+        public void checkForHeadersInCsvBuilder()
+        {
+            //expected headers name
+            string[] expectedHeader = { "State", "Population", "AreaInSqKm", "DensityPerSqKm" };
+            //assign parameters 1 for not run
+            int jasonForm = 1;
+            int sort = 1;
+            //send sorting column number
+            int columnNumber = 0;
+            //call the read data and retun the output dynamically and store in var
+            //return tuple this is new concept to return mulltiple values
+            //and get pertcular value Item1,Item2,Item3,Item4
+            var output=builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+
+            //my itoe three is heeders name
+            //if expected output and real output cheack if equal then pass the test
+            for (int i = 0; i < expectedHeader.Length; i++)
+            {
+               
+                Assert.AreEqual(expectedHeader[i], output.Item3[i]);
+            }
+
+        }
+        /// <summary>
+        /// check for first state
+        /// </summary>
+        [Test]
+        public void checkForFirstStateCsvBuilder()
+        {
+            //expected output
+            var expectedState = "Andhra Pradesh";  
+            //send o for sorting and json format
+            int jasonForm = 0;
+            int sort = 0;
+            //sorting apply on this column
+            int columnNumber = 0;
+            //call readdata and return output store in var output 
+            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //second output is store in firststate first sorted record
+            var firstState = output.Item2[0];
+            //if equal then pass 
+            Assert.AreEqual(expectedState, firstState);
+        }
+        /// <summary>
+        /// check for last state in alphabetical order
+        /// </summary>
+        [Test]
+        public void checkForLastStateCsvBuilder()
+        {
+            //expected output
+            var expectedState = "West Bengal";
+            //send 0 for sorting and json format
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 0;
+            //call readdata and return output store in var output 
+            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //itome three is number of record 29 and send to last record index
+            var lastRecordIndex = output.Item3;
+            //itome 2 is sorted list an in sorted list last state in alphabetical order
+            var LastState = output.Item2;
+            //if same then pass
+            Assert.AreEqual(expectedState, LastState[lastRecordIndex]);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void checkForNumberOfRecordsInCsvBuilder()
+        {
+            //send 1 for not sorting and not json format
+            int jasonForm = 1;
+            int sort = 1;
+            int columnNumber = 0;
+            //call readdata and return output store in var output 
+            var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //itome three is number of record
+            var numberOfRecord = output.Item2;
+            //if same then pass
+            Assert.AreEqual(29, numberOfRecord);
+        }
+
+
     }
 }
