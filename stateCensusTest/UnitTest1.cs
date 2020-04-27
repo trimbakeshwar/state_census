@@ -355,9 +355,10 @@ namespace stateCencesTesting
             csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
             //var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
             //second output is store in firststate first sorted record
-
+            int rowNumber = 0;
+            int ColumnNumber = 0;
             var firstState = state.getSortedRecord();
-            firstState = firstState[0];
+            firstState = firstState[rowNumber][ColumnNumber];
             //if equal then pass 
             Assert.AreEqual(expectedState, firstState);
         }
@@ -374,12 +375,14 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort,columnNumber);
             //geting number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //geting sorted record
             var LastState = state.getSortedRecord();
-            LastState = LastState[lastRecordIndex];
+           
+            int ColumnNumber = 0;
+            LastState = LastState[lastRecordIndex][ColumnNumber];
             //if same then pass
             Assert.AreEqual(expectedState, LastState);
         }
@@ -415,8 +418,10 @@ namespace stateCencesTesting
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            int rowNumber = 0;
+            int ColumnNumber = 0;
             //get first string of record
-            string first = sortedList[0];
+            string first = sortedList[rowNumber][ColumnNumber];
             Assert.AreEqual("Andhra Pradesh", first);
 
         }
@@ -435,8 +440,9 @@ namespace stateCencesTesting
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            int ColumnNumber = 0;
             //get last string of record
-            string lastState = sortedList[state.getNumberOfRecrd()];
+            string lastState = sortedList[state.getNumberOfRecrd()][ColumnNumber];
             Assert.AreEqual("West Bengal", lastState);
 
         }
@@ -501,7 +507,9 @@ namespace stateCencesTesting
             CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
             //get sorted record from csv code
             var firstState = state.getSortedRecord();
-            firstState = firstState[0];
+            int row = 0;
+            int column = 3;
+            firstState = firstState[row][column];
             //if equal then pass 
             Assert.AreEqual(expectedState, firstState);
         }
@@ -524,7 +532,8 @@ namespace stateCencesTesting
             //get sorted list last state in alphabetical order
             var LastState = state.getSortedRecord();
             //get last record from sorted file
-            LastState = LastState[lastRecordIndex];
+            int column = 3;
+            LastState = LastState[lastRecordIndex][column];
             //if same then pass
             Assert.AreEqual(expectedState, LastState);
         }
@@ -561,7 +570,9 @@ namespace stateCencesTesting
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
             //get first string of record
-            string first = sortedList[0];
+            int row = 0;
+            int column = 3;
+            string first = sortedList[row][column];
             Assert.AreEqual("AD", first);
            
         }
@@ -581,7 +592,8 @@ namespace stateCencesTesting
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
             //get last string of record
-            string lastState = sortedList[state.getNumberOfRecrd()];
+            int column = 3;
+            string lastState = sortedList[state.getNumberOfRecrd()][column];
             Assert.AreEqual("WB", lastState);
 
         }

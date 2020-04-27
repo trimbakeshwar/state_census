@@ -47,24 +47,25 @@ namespace stateScensus
                 //geting header name
                 string[] headers = csv.GetFieldHeaders();
                 //for add record csv file to list
-                List<string[]> record = new List<string[]>();
+                Dictionary<int, string[]> sortelist = new Dictionary<int, string[]>(); 
                 //use for storing sorted output 
-                List<string> sortelist = new List<string>();
+                Dictionary<int,string[]> record = new Dictionary<int, string[]>();
                 //headers name add at starting 
-                record.Add(headers);
+                record.Add(numberOfRecord, headers);
                 //geting delimeter
                 char delimeter = csv.Delimiter;
                 //add record csv file to list
                 while (csv.ReadNextRecord())
                 {
+                    //calculate number of record
+                    numberOfRecord++;
                     //create temp array for storing data tempararily
                     string[] temp = new string[fieldCount];
                     //copy data from csv file to temp list
                     csv.CopyCurrentRecordTo(temp);
                     //add temp data to record list
-                    record.Add(temp);
-                    //calculate number of record
-                    numberOfRecord++;
+                    record.Add(numberOfRecord,temp);
+                   
                 }
                 //if number of record is zero then throw exception file is empty
                 if (numberOfRecord == 0)
@@ -75,13 +76,13 @@ namespace stateScensus
                 if (sort == 0)
                 {
                     //call the sorting function
-                    sortelist=SortTheList(record, columnNumber);
+                    sortelist = SortTheList(record, columnNumber, fieldCount);
                    
                 }
                 //if user send 0 for output in json format otherwise no
                 if (jsonForm == 0)
                 {
-                    var jsonFormdata = JsonSerializer.Serialize(sortelist);  
+                    var jsonFormdata = JsonSerializer.Serialize(sortelist.Values);  
                     //return data dynamically
                     return (record,  numberOfRecord, headers, sortelist, jsonFormdata);
                    
@@ -106,45 +107,43 @@ namespace stateScensus
         /// <param name="record">list of record </param>
         /// <param name="columnNumber">sorting apply on this column</param>
         /// <returns></returns>
-        public List<string> SortTheList(List<string[]> record, int columnNumber)
+        public dynamic SortTheList(Dictionary<int, string[]> record, int columnNumber,int fieldCount)
         {
             //number of record present in record
             int count = record.Count;
-            //list for sorting output store
-            List<string> sortlist = new List<string>();
-            //add perticular column data in this list
-            for (int i = 0; i < count; i++)
-            {
-                //assign the one record to recordOne 
-                dynamic recordOne = record[i];
-                //and perticular this record column number data assign to value one
-                //suppose record one is   { "State", "Population", "AreaInSqKm", "DensityPerSqKm" }
-                //and iam send column number 1 the it  on the population data
-                string valueOne = recordOne[columnNumber];
-                //then add in list
-                sortlist.Add(valueOne);
-            }
+           
             //sort the data 
             for (int i = 0; i < count; i++)
-            {                
+            {
+                dynamic recordOne = record[i];
+                string valueOne = recordOne[columnNumber];
                 for (int j = 0; j < count; j++)
-                {         
+                {
+                    dynamic recordTwo = record[j];
+                    string valueTwo = recordTwo[columnNumber];
                     //compare which one is greter and swap 
-                    if (sortlist[j].CompareTo(sortlist[i]) > 0)
+                    if (valueOne.CompareTo(valueTwo) < 0)
                     {
-                        string[] temp = new string[1];
-                        temp[0] = sortlist[i];
-                        sortlist[i] = sortlist[j];
-                        sortlist[j] = temp[0];                                                  
+
+                        dynamic temp = record[i];
+                        record[i] = record[j];
+                        record[j] = temp;                                                 
                     }
                 }
             }
             //display the sorted list
-            foreach (string Record in sortlist)
+           for(int i=0;i<count;i++)
             {
-                Console.WriteLine(Record);
+                for(int j=0;j<fieldCount; j++)
+                {
+                    Console.Write("-"+record[i][j]);
+                }
+                Console.WriteLine();
             }
-            return sortlist;
+        
+             
+            
+            return record;
         }
         
     }   
