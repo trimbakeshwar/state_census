@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json;
-using sate_Censes;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace stateScensus
 {
-    class Program
+    class main
     {
         static void Main(string[] args)
         {
 
-           
         }
     }
 }

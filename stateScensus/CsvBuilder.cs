@@ -13,16 +13,17 @@ namespace stateScensus
 /// </summary>
     public class CsvBuilder 
     {
-        string Path;
-        int jsonForm;
-        int sort;
-        int columnNumber;
-        public CsvBuilder(string Path, int jsonForm, int sort, int columnNumber)
+        private string Path;
+        public int jsonForm;
+        public int sort;
+        public int columnNumber;
+       
+        public CsvBuilder(string path, int jsonForm, int sort, int columnNumber)
         {
-            this.Path=Path;
-            this.jsonForm=jsonForm;
-            this.sort=sort;
-            this.columnNumber=columnNumber;
+            this.Path = path;
+            this.jsonForm = jsonForm;
+            this.sort = sort;
+            this.columnNumber = columnNumber;
         }
         /// <summary>
         /// read the data from csv file
@@ -46,10 +47,10 @@ namespace stateScensus
                 int fieldCount = csv.FieldCount;
                 //geting header name
                 string[] headers = csv.GetFieldHeaders();
+                //use for storing sorted output   
+                Dictionary<int, string[]> sortelist = new Dictionary<int, string[]>();
                 //for add record csv file to list
-                Dictionary<int, string[]> sortelist = new Dictionary<int, string[]>(); 
-                //use for storing sorted output 
-                Dictionary<int,string[]> record = new Dictionary<int, string[]>();
+                Dictionary<int, string[]> record = new Dictionary<int, string[]>();
                 //headers name add at starting 
                 record.Add(numberOfRecord, headers);
                 //geting delimeter
@@ -64,8 +65,8 @@ namespace stateScensus
                     //copy data from csv file to temp list
                     csv.CopyCurrentRecordTo(temp);
                     //add temp data to record list
-                    record.Add(numberOfRecord,temp);
-                   
+                    record.Add(numberOfRecord, temp);
+
                 }
                 //if number of record is zero then throw exception file is empty
                 if (numberOfRecord == 0)
@@ -77,15 +78,15 @@ namespace stateScensus
                 {
                     //call the sorting function
                     sortelist = SortTheList(record, columnNumber, fieldCount);
-                   
+
                 }
                 //if user send 0 for output in json format otherwise no
                 if (jsonForm == 0)
                 {
-                    var jsonFormdata = JsonSerializer.Serialize(sortelist.Values);  
+                    var jsonFormdata = JsonSerializer.Serialize(sortelist.Values);
                     //return data dynamically
-                    return (record,  numberOfRecord, headers, sortelist, jsonFormdata);
-                   
+                    return (record, numberOfRecord, headers, sortelist, jsonFormdata);
+
                 }
                 return (record, numberOfRecord, headers);
 
@@ -101,7 +102,6 @@ namespace stateScensus
                 throw new Exception(e.Message);
             }
         }
-        /// <summary>
         ///sort the data in ascending order
         /// </summary>
         /// <param name="record">list of record </param>
@@ -132,19 +132,17 @@ namespace stateScensus
                 }
             }
             //display the sorted list
-           for(int i=0;i<count;i++)
+            for (int i = 0; i < count; i++)
             {
-                for(int j=0;j<fieldCount; j++)
+                for (int j = 0; j < fieldCount; j++)
                 {
-                    Console.Write("-"+record[i][j]);
+                    Console.Write("-" + record[i][j]);
                 }
                 Console.WriteLine();
             }
-        
-             
-            
             return record;
         }
-        
+
+       
     }   
 }

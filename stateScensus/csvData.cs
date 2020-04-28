@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace stateScensus
 {
@@ -10,7 +11,7 @@ namespace stateScensus
         {
 
         }
-
+       
         //call read data and get the record
         public dynamic getRecord()
         {
@@ -41,5 +42,7 @@ namespace stateScensus
             var output = readData();
             return output.Item2;
         }
+       
+       
     }
 }

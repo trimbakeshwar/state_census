@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace stateScensus
 {
@@ -14,9 +15,8 @@ namespace stateScensus
         /// <param name="sort">choice 0 for sort 1 for no</param>
         /// <param name="columnNumber">sorting on take place on the basis of column</param>
         public CsvCode(string path, int jasonForm, int sort, int columnNumber) : base(path, jasonForm, sort, columnNumber)
-        {
-
-        }
+        { }
+       
         //call read data and get the record
         public dynamic getRecord()
         {
@@ -47,5 +47,7 @@ namespace stateScensus
             var output = readData();
             return output.Item2;
         }
+       
+       
     }
 }

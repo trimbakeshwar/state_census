@@ -135,10 +135,7 @@ namespace stateCencesTesting
                 //if length is proper and name is proper then return header names
                 //and check with expected output
                 string[] header = read.numberOfHeader(userHeader);
-                for (int i = 0; i < header.Length; i++)
-                {
-                    Assert.AreEqual(expectedHeader[i], header[i]);
-                }
+               
             }
             catch (StateCensusException e)
             {
@@ -259,10 +256,10 @@ namespace stateCencesTesting
                 string[] userHeader = { "SrNo", "StateName", "TIN", "StateCo"};
                 string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
                 //if header name is proper then lpass the test if header name not proper then throws exception header name is not proper and catch in catcj
-               /* for (int i = 0; i < header.Length; i++)
+                for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
-                }*/
+                }
             }
             catch (StateCensusException e)
             {
@@ -285,10 +282,10 @@ namespace stateCencesTesting
                 //if length is proper and name is proper then return header names
                 //and check with expected output
                 string[] header = ReadForCsvStateCode.numberOfHeader(userHeader);
-            /*    for (int i = 0; i < header.Length; i++)
+                for (int i = 0; i < header.Length; i++)
                 {
                     Assert.AreEqual(expectedHeader[i], header[i]);
-                }*/
+                }
             }
             catch (StateCensusException e)
             {
@@ -392,6 +389,7 @@ namespace stateCencesTesting
         [Test]
         public void checkForNumberOfRecordsInCsvData()
         {
+
             //send 1 for not sorting and not json format
             int jasonForm = 1;
             int sort = 1;
@@ -402,6 +400,11 @@ namespace stateCencesTesting
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord);
+            string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+            csvData state1 = new csvData(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            var numberOfRecord2 = state1.getNumberOfRecrd();
+            //if same then pass
+            Assert.AreEqual(37, numberOfRecord2);
         }
         /// <summary>
         /// check for json formated first state
@@ -553,10 +556,17 @@ namespace stateCencesTesting
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(37, numberOfRecord);
+             string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
+            CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber);
+            //get number of record from csv code
+            var numberOfRecord2 = state.getNumberOfRecrd();
+            //if same then pass
+            Assert.AreEqual(37, numberOfRecord2);
+
         }
-       /// <summary>
-       /// check for json formated first state
-       /// </summary>
+        /// <summary>
+        /// check for json formated first state
+        /// </summary>
         [Test]
         public void CheckForJsonFormatFirstState()
         {
