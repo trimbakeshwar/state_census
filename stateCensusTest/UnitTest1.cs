@@ -559,10 +559,10 @@ namespace stateCencesTesting
             Assert.AreEqual(37, numberOfRecord);
              string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
             CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber);
-            //get number of record from csv code
             var numberOfRecord2 = state2.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord2);
+
 
         }
         /// <summary>
