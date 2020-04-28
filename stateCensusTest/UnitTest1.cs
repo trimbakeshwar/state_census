@@ -401,6 +401,7 @@ namespace stateCencesTesting
             //if same then pass
             Assert.AreEqual(29, numberOfRecord);
             string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+            //call the comstructor and send path
             csvData state1 = new csvData(PathOfCsvStateCode, jasonForm, sort, columnNumber);
             var numberOfRecord2 = state1.getNumberOfRecrd();
             //if same then pass
