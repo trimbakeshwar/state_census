@@ -359,6 +359,7 @@ namespace stateCencesTesting
             //if equal then pass 
             Assert.AreEqual(expectedState, firstState);
         }
+
         /// <summary>
         /// check for last state in alphabetical order
         /// </summary>
@@ -400,12 +401,12 @@ namespace stateCencesTesting
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord);
-            string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+           /* string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
             //call the comstructor and send path
             csvData state1 = new csvData(PathOfCsvStateCode, jasonForm, sort, columnNumber);
             var numberOfRecord2 = state1.getNumberOfRecrd();
             //if same then pass
-            Assert.AreEqual(37, numberOfRecord2);
+            Assert.AreEqual(37, numberOfRecord2);*/
         }
         /// <summary>
         /// check for json formated first state
@@ -450,6 +451,47 @@ namespace stateCencesTesting
             Assert.AreEqual("West Bengal", lastState);
 
         }
+        [Test]
+        public void CheckForJsonFormatMostPopulatedState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 1;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            int rowNumber = 0;
+            int ColumnNumber = 0;
+            //get first string of record
+            string first = sortedList[rowNumber][ColumnNumber];
+            Assert.AreEqual("Uttarakhand", first);
+
+        }
+        /// <summary>
+        /// check for json formated least populated state state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatLeastPopulatedState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 1;
+            //call constructor of csv file
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            int ColumnNumber = 0;
+            //get last string of record
+            string lastState = sortedList[state.getNumberOfRecrd()-1][ColumnNumber];
+            Assert.AreEqual("West Bengal", lastState);
+
+        }
+
 
 
 

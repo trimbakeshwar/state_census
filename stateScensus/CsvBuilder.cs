@@ -48,8 +48,7 @@ namespace stateScensus
                 int fieldCount = csv.FieldCount;
                 //geting header name
                 string[] headers = csv.GetFieldHeaders();
-                //use for storing sorted output   
-                Dictionary<int, string[]> sortelist = new Dictionary<int, string[]>();
+               
                 //for add record csv file to list
                 Dictionary<int, string[]> record = new Dictionary<int, string[]>();
                 //headers name add at starting 
@@ -67,6 +66,7 @@ namespace stateScensus
                     csv.CopyCurrentRecordTo(temp);
                     //add temp data to record list
                     record.Add(numberOfRecord, temp);
+                  
 
                 }
                 //if number of record is zero then throw exception file is empty
@@ -262,8 +262,6 @@ namespace stateScensus
                 throw new Exception(e.Message);
             }
         }
-
-
 
     }
 }
