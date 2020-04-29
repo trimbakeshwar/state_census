@@ -23,12 +23,7 @@ namespace stateScensus
             var output = readData();
             return output.Item1;
         }
-        //call the readdata and get sorted record
-        public dynamic getSortedRecord()
-        {
-            var output = readData();
-            return output.Item4;
-        }
+       
         //call the readdata and get heders
         public dynamic getHeaders()
         {
@@ -39,7 +34,7 @@ namespace stateScensus
         public dynamic getJesonFormatRecord()
         {
             var output = readData();
-            return output.Item5;
+            return output.Item4;
         }
         //call the readdata and get number of record
         public dynamic getNumberOfRecrd()

@@ -78,15 +78,15 @@ namespace stateScensus
                 if (sort == 0)
                 {
                     //call the sorting function
-                    sortelist = SortTheList(record, columnNumber, fieldCount);
+                    record = SortTheList(record, columnNumber, fieldCount);
 
                 }
                 //if user send 0 for output in json format otherwise no
                 if (jsonForm == 0)
                 {
-                    var jsonFormdata = JsonSerializer.Serialize(sortelist.Values);
+                    var jsonFormdata = JsonSerializer.Serialize(record.Values);
                     //return data dynamically
-                    return (record, numberOfRecord, headers, sortelist, jsonFormdata);
+                    return (record, numberOfRecord, headers, jsonFormdata);
 
                 }
                 return (record, numberOfRecord, headers);
@@ -108,7 +108,7 @@ namespace stateScensus
         /// <param name="record">list of record </param>
         /// <param name="columnNumber">sorting apply on this column</param>
         /// <returns></returns>
-        public dynamic SortTheList(Dictionary<int, string[]> record, int columnNumber,int fieldCount)
+        public dynamic SortTheList(dynamic record, int columnNumber,int fieldCount)
         {
             //number of record present in record
             int count = record.Count;
@@ -143,7 +143,127 @@ namespace stateScensus
             }
             return record;
         }
+        public dynamic readData(string Path, string classDAOname,int jsonForm, int sort, int columnNumber)
+        {
+            //declear number of record is 0
+            int numberOfRecord = 0;
+            try
+            {
+                //steramreader read the data from file
+                using StreamReader read = new StreamReader(Path);
+                //lode stream reader data on csv reder
+                using CsvReader csv = new CsvReader(read, true);
+                //number of field present in file
+                int fieldCount = csv.FieldCount;
+                //get headers
+                dynamic headers = csv.GetFieldHeaders();
+                //if class name is same of stateScensusCodeDAO then it goes inside
+                if (classDAOname.Equals("stateScensusCodeDAO"))
+                {
+                    //create dictionary to store object of stateScensusCodeDAO class
+                    Dictionary<int, stateScensusCodeDAO> record = new Dictionary<int, stateScensusCodeDAO>();
 
-       
-    }   
+
+                    //headers name add at starting as object
+                    record.Add(numberOfRecord, new stateScensusCodeDAO(headers));
+                    //geting delimeter
+                    char delimeter = csv.Delimiter;
+                    //add record csv file to list
+                    while (csv.ReadNextRecord())
+                    {
+                        //calculate number of record
+                        numberOfRecord++;
+                        //create temp array for storing data tempararily
+                        string[] temp = new string[fieldCount];
+                        //copy data from csv file to temp list
+                        csv.CopyCurrentRecordTo(temp);
+                        //add temp data to Dictionary as object
+                        record.Add(numberOfRecord, new stateScensusCodeDAO(temp));
+
+                    }
+                    //if number of record is zero then throw exception file is empty
+                    if (numberOfRecord == 0)
+                    {
+                        throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, "file has not any data");
+                    }
+                    //if user send 0 for sorting then  data otherwise no
+                    if (sort == 0)
+                    {
+                        //call the sorting function
+                        record = SortTheList(record, columnNumber, fieldCount);
+
+                    }
+                    //if user send 0 for output in json format otherwise no
+                    if (jsonForm == 0)
+                    {
+                        var jsonFormdata = JsonSerializer.Serialize(record.Values);
+                        //return data dynamically
+                        return (record, numberOfRecord, headers, jsonFormdata);
+
+                    }
+                    return (record, numberOfRecord, headers);
+                }
+                //
+                if (classDAOname.Equals("stateScencesDataDAO"))
+                {
+                    //create dictonary for storing stateScencesDataDAO
+                    Dictionary<int, stateScencesDataDAO> record = new Dictionary<int, stateScencesDataDAO>();
+
+
+                    //headers name add at starting as object
+                    record.Add(numberOfRecord, new stateScencesDataDAO(headers));
+                    //geting delimeter
+                    char delimeter = csv.Delimiter;
+                    //add record csv file to list
+                    while (csv.ReadNextRecord())
+                    {
+                        //calculate number of record
+                        numberOfRecord++;
+                        //create temp array for storing data tempararily
+                        string[] temp = new string[fieldCount];
+                        //copy data from csv file to temp list
+                        csv.CopyCurrentRecordTo(temp);
+                        //add temp data to record list as object
+                        record.Add(numberOfRecord, new stateScencesDataDAO(temp));
+
+                    }
+                    //if number of record is zero then throw exception file is empty
+                    if (numberOfRecord == 0)
+                    {
+                        throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, "file has not any data");
+                    }
+                    //if user send 0 for sorting then  data otherwise no
+                    if (sort == 0)
+                    {
+                        //call the sorting function
+                        record = SortTheList(record, columnNumber, fieldCount);
+
+                    }
+                    //if user send 0 for output in json format otherwise no
+                    if (jsonForm == 0)
+                    {
+                        var jsonFormdata = JsonSerializer.Serialize(record.Values);
+                        //return data dynamically
+                        return (record, numberOfRecord, headers,  jsonFormdata);
+
+                    }
+                    return (record, numberOfRecord, headers);
+                }
+                return 0;
+            }
+            //all exceptions catch below 
+            catch (StateCensusException e)
+            {
+                throw new StateCensusException(StateCensusException.ExceptionType.FILE_HAS_NO_DATA, e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw new Exception(e.Message);
+            }
+        }
+
+
+
+    }
 }
