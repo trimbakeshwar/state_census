@@ -354,7 +354,7 @@ namespace stateCencesTesting
             //second output is store in firststate first sorted record
             int rowNumber = 0;
             int ColumnNumber = 0;
-            var firstState = state.getSortedRecord();
+            var firstState = state.getRecord();
             firstState = firstState[rowNumber][ColumnNumber];
             //if equal then pass 
             Assert.AreEqual(expectedState, firstState);
@@ -376,7 +376,7 @@ namespace stateCencesTesting
             //geting number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //geting sorted record
-            var LastState = state.getSortedRecord();
+            var LastState = state.getRecord();
            
             int ColumnNumber = 0;
             LastState = LastState[lastRecordIndex][ColumnNumber];
@@ -510,7 +510,7 @@ namespace stateCencesTesting
             //call readdata and return output store in var output 
             CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
             //get sorted record from csv code
-            var firstState = state.getSortedRecord();
+            var firstState = state.getRecord();
             int row = 0;
             int column = 3;
             firstState = firstState[row][column];
@@ -534,7 +534,7 @@ namespace stateCencesTesting
             //last record index get from number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //get sorted list last state in alphabetical order
-            var LastState = state.getSortedRecord();
+            var LastState = state.getRecord();
             //get last record from sorted file
             int column = 3;
             LastState = LastState[lastRecordIndex][column];
@@ -559,17 +559,9 @@ namespace stateCencesTesting
             Assert.AreEqual(37, numberOfRecord);
              string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
             CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber);
-            //get number of record from csv code
-<<<<<<< HEAD
-            var numberOfRecord2 = state.getNumberOfRecrd();
+            var numberOfRecord1 = state2.getNumberOfRecrd();
             //if same then pass
-            Assert.AreEqual(37, numberOfRecord2);
-=======
-            var numberOfRecord2 = state2.getNumberOfRecrd();
-            //if same then pass
-            Assert.AreEqual(29, numberOfRecord2);
->>>>>>> refactor_7
-
+            Assert.AreEqual(29, numberOfRecord1);
         }
         /// <summary>
         /// check for json formated first state
