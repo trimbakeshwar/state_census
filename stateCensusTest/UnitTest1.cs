@@ -775,4 +775,38 @@ namespace stateCencesTesting
 
         }
     }
+    public class TestForUsCensusData
+    {
+        static string PathOfCsvStateCode = @"D:\trimbak\state analys\USCensusData.csv";
+
+        //create a object of stateCensusAnalyser class 
+
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+        /// <summary>
+        /// check for number of record in US census
+        /// </summary>
+        [Test]
+        public void checkForNumberOfRecordsInUScensusData()
+        {
+            //send 1 for not sorting and not json format
+            int jasonForm = 1;
+            int sort = 1;
+            int columnNumber = 3;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get number of record from csv code
+            var numberOfRecord = state.getNumberOfRecrd();
+            //if same then pass
+            Assert.AreEqual(51, numberOfRecord);
+            
+        }
+
+
+    }
 }
