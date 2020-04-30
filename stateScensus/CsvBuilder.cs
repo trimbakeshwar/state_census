@@ -45,9 +45,9 @@ namespace stateScensus
             try
             {
                 //steramreader read the data from file
-                using StreamReader read = new StreamReader(Path);
+                using StreamReader streamread = new StreamReader(Path);
                 //lode stream reader data on csv reder
-                using CsvReader csv = new CsvReader(read, true);
+                using CsvReader csv = new CsvReader(streamread, true);
                 //number of field present in file
                 int fieldCount = csv.FieldCount;
                 //geting header name
@@ -184,9 +184,9 @@ namespace stateScensus
             try
             {
                 //steramreader read the data from file
-                using StreamReader read = new StreamReader(Path);
+                using StreamReader streamread = new StreamReader(Path);
                 //lode stream reader data on csv reder
-                using CsvReader csv = new CsvReader(read, true);
+                using CsvReader csv = new CsvReader(streamread, true);
                 //number of field present in file
                 int fieldCount = csv.FieldCount;
                 //get headers
