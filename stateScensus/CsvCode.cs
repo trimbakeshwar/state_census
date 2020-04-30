@@ -14,7 +14,7 @@ namespace stateScensus
         /// <param name="jasonForm"> 1 for no 0 for yes choice if u want json formaat or not</param>
         /// <param name="sort">choice 0 for sort 1 for no</param>
         /// <param name="columnNumber">sorting on take place on the basis of column</param>
-        public CsvCode(string path, int jasonForm, int sort, int columnNumber) : base(path, jasonForm, sort, columnNumber)
+        public CsvCode(string path, int jasonForm, int sort, int columnNumber,int stringIsCharOrInt) : base(path, jasonForm, sort, columnNumber, stringIsCharOrInt)
         { }
        
         //call read data and get the record

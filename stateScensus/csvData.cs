@@ -7,7 +7,7 @@ namespace stateScensus
 {
     public class csvData : CsvBuilder
     {
-        public csvData(string path, int jasonForm, int sort, int columnNumber) : base(path, jasonForm, sort, columnNumber)
+        public csvData(string path, int jasonForm, int sort, int columnNumber,int stringIsCharOrInt) : base(path, jasonForm, sort, columnNumber, stringIsCharOrInt)
         {
 
         }
@@ -37,7 +37,51 @@ namespace stateScensus
             var output = readData();
             return output.Item2;
         }
-       
-       
+      public dynamic getFirstState()
+      {
+            var record = readData();
+            int count = record.Count;
+            for (int i = 0; i < count; i++)
+            {
+                dynamic recordOne = record[i];
+                string valueOne = recordOne[columnNumber];
+                for (int j = 0; j < count; j++)
+                {
+                    dynamic recordTwo = record[j];
+                    string valueTwo = recordTwo[columnNumber];
+
+                    if (recordOne[columnNumber].Length < recordTwo[columnNumber].Length)
+                    {
+                       return record[i];
+                    }
+
+
+                }
+            }
+            return 0;
+      }
+        public dynamic getLastState()
+        {
+            var record = readData();
+            int count = record.Count;
+            for (int i = 0; i < count; i++)
+            {
+                dynamic recordOne = record[i];
+                string valueOne = recordOne[columnNumber];
+                for (int j = 0; j < count; j++)
+                {
+                    dynamic recordTwo = record[j];
+                    string valueTwo = recordTwo[columnNumber];
+
+                    if (recordOne[columnNumber].Length > recordTwo[columnNumber].Length)
+                    {
+                        return record[i];
+                    }
+
+
+                }
+            }
+            return 0;
+        }
     }
 }

@@ -320,10 +320,11 @@ namespace stateCencesTesting
             int sort = 1;
             //send sorting column number
             int columnNumber = 0;
+            int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
             //return tuple this is new concept to return mulltiple values
             //and get pertcular value Item1,Item2,Item3,Item4
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             var output = state.getHeaders();
 
             //my itoe three is heeders name
@@ -348,8 +349,10 @@ namespace stateCencesTesting
             int sort = 0;
             //sorting apply on this column
             int columnNumber = 0;
+            //if it is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
             //second output is store in firststate first sorted record
             int rowNumber = 0;
@@ -372,8 +375,10 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 0;
+            //if it is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort,columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort,columnNumber, stringIsCharOrInt);
             //geting number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //geting sorted record
@@ -395,8 +400,10 @@ namespace stateCencesTesting
             int jasonForm = 1;
             int sort = 1;
             int columnNumber = 0;
+            //if it is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //itome three is number of record
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
@@ -418,7 +425,9 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 0;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            int stringIsCharOrInt = 0;
+            //call readdata and return output store in var output 
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -439,8 +448,10 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 0;
+            //if it is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
             //call constructor of csv file
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -458,16 +469,18 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 1;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
-            int rowNumber = 0;
+            int rowNumber = 29;
             int ColumnNumber = 0;
             //get first string of record
             string first = sortedList[rowNumber][ColumnNumber];
-            Assert.AreEqual("Uttarakhand", first);
+            Assert.AreEqual("Uttar Pradesh", first);
 
         }
         /// <summary>
@@ -479,16 +492,84 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 1;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
             //call constructor of csv file
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber);
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
             int ColumnNumber = 0;
             //get last string of record
-            string lastState = sortedList[state.getNumberOfRecrd()-1][ColumnNumber];
-            Assert.AreEqual("West Bengal", lastState);
+            string firstLowPopulation = sortedList[1][ColumnNumber];
+            Assert.AreEqual("Sikkim", firstLowPopulation);
+
+        }
+        [Test]
+        public void CheckForJsonFormatMostPopulatedDensityState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+           // var output=state.getRecord();
+             int rowNumber = 29;
+             int ColumnNumber = 0;
+             //get first string of record
+             string highest = sortedList[rowNumber][ColumnNumber];
+           /* string path = @"D:\trimbak\state analys\StateCensusData.csv";
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+            csvData builder = new csvData(path, jasonForm, sort, columnNumber);
+            dynamic output = builder.getRecord();
+            var first = output[1][0];
+            var last = output[29][0];
+           // Assert.AreEqual("Mizoram", last);*/
+            Assert.AreEqual("Bihar", highest);
+
+        }
+        /// <summary>
+        /// check for json formated least populated state state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatLeastPopulatedDensityState()
+        {
+            /*string path = @"D:\trimbak\state analys\StateCensusData.csv";
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 3;
+            csvData builder = new csvData(path, jasonForm, sort, columnNumber);
+            dynamic output = builder.getRecord();
+            var first = output[1][0];
+            var last = output[29][0];
+            Assert.AreEqual("Mizoram", first);*/
+
+             int jasonForm = 0;
+             int sort = 0;
+             int columnNumber = 3;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+             //deserialize objects to list
+              var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+              //var output=state.getRecord();
+              int ColumnNumber = 0;
+              //get last string of record
+
+             string lastState = sortedList[1][ColumnNumber];
+             Assert.AreEqual("Mizoram", lastState);
 
         }
 
@@ -521,9 +602,10 @@ namespace stateCencesTesting
             int sort = 1;
             //send sorting column number
             int columnNumber = 3;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-           
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //geting heders name by this function
             var output = state.getHeaders();
 
@@ -549,8 +631,10 @@ namespace stateCencesTesting
             int sort = 0;
             //sorting apply on this column
             int columnNumber = 3;
-            //call readdata and return output store in var output 
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get sorted record from csv code
             var firstState = state.getRecord();
             int row = 0;
@@ -571,8 +655,10 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 3;
-            //call readdata and return output store in var output 
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //last record index get from number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //get sorted list last state in alphabetical order
@@ -592,15 +678,21 @@ namespace stateCencesTesting
             //send 1 for not sorting and not json format
             int jasonForm = 1;
             int sort = 1;
-            int columnNumber = 3;
-            //call readdata and return output store in var output 
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            int columnNumber = 3; 
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get number of record from csv code
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(37, numberOfRecord);
              string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
-            CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber);
+      
+            
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            
             var numberOfRecord1 = state2.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord1);
@@ -614,8 +706,9 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 3;
-           //call the constructor
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -636,8 +729,9 @@ namespace stateCencesTesting
             int jasonForm = 0;
             int sort = 0;
             int columnNumber = 3;
-            //call constructor of csv file
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber);
+            int stringIsCharOrInt = 0;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list

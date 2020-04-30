@@ -7,10 +7,12 @@ namespace stateScensus
     class stateScencesDataDAO
     {
 
-        private string State { set; get; }
-        private string Population { set; get; }
-        private string AreaInSqKm { set; get; }
-        private string DensityPerSqKm { set; get; }
+        public string State { set; get; }
+        public string Population { set; get; }
+        public string AreaInSqKm { set; get; }
+        public string DensityPerSqKm { set; get; }
+     
+
         public stateScencesDataDAO(string[] attributs)
         {
             State = attributs[0];

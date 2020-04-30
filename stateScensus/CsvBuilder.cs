@@ -6,25 +6,29 @@ using System.Text;
 using stateCensusAnaliser;
 using System.Collections;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace stateScensus
 {/// <summary>
 /// csv bilder class for reding or fetching data from file 
 /// </summary>
 
-    public class CsvBuilder 
+    public class CsvBuilder
     {
         private string Path;
         public int jsonForm;
         public int sort;
         public int columnNumber;
-       
-        public CsvBuilder(string path, int jsonForm, int sort, int columnNumber)
+        public int stringIsCharOrInt;
+
+        public CsvBuilder(string path, int jsonForm, int sort, int columnNumber,int stringIsCharOrInt)
         {
             this.Path = path;
             this.jsonForm = jsonForm;
             this.sort = sort;
             this.columnNumber = columnNumber;
+            this.stringIsCharOrInt = stringIsCharOrInt;
         }
         /// <summary>
         /// read the data from csv file
@@ -48,7 +52,7 @@ namespace stateScensus
                 int fieldCount = csv.FieldCount;
                 //geting header name
                 string[] headers = csv.GetFieldHeaders();
-               
+
                 //for add record csv file to list
                 Dictionary<int, string[]> record = new Dictionary<int, string[]>();
                 //headers name add at starting 
@@ -66,7 +70,7 @@ namespace stateScensus
                     csv.CopyCurrentRecordTo(temp);
                     //add temp data to record list
                     record.Add(numberOfRecord, temp);
-                  
+
 
                 }
                 //if number of record is zero then throw exception file is empty
@@ -78,7 +82,7 @@ namespace stateScensus
                 if (sort == 0)
                 {
                     //call the sorting function
-                    record = SortTheList(record, columnNumber, fieldCount);
+                    record = SortTheList(record, columnNumber, fieldCount, stringIsCharOrInt);
 
                 }
                 //if user send 0 for output in json format otherwise no
@@ -108,30 +112,57 @@ namespace stateScensus
         /// <param name="record">list of record </param>
         /// <param name="columnNumber">sorting apply on this column</param>
         /// <returns></returns>
-        public dynamic SortTheList(dynamic record, int columnNumber,int fieldCount)
+        public dynamic SortTheList(dynamic record, int columnNumber, int fieldCount,int stringIsCharOrInt)
         {
             //number of record present in record
             int count = record.Count;
-           
-            //sort the data 
-            for (int i = 0; i < count; i++)
+            if (stringIsCharOrInt == 0)
             {
-                dynamic recordOne = record[i];
-                string valueOne = recordOne[columnNumber];
-                for (int j = 0; j < count; j++)
+                for (int i = 0; i < count; i++)
                 {
-                    dynamic recordTwo = record[j];
-                    string valueTwo = recordTwo[columnNumber];
-                    //compare which one is greter and swap 
-                    if (valueOne.CompareTo(valueTwo) < 0)
+                    dynamic recordOne = record[i];
+                    string valueOne = recordOne[columnNumber];
+                    for (int j = 0; j < count; j++)
                     {
+                        dynamic recordTwo = record[j];
+                        string valueTwo = recordTwo[columnNumber];
+                        //compare which one is greter and swap 
+                        if (valueOne.CompareTo(valueTwo) < 0)
+                        {
 
-                        dynamic temp = record[i];
-                        record[i] = record[j];
-                        record[j] = temp;                                                 
+                            dynamic temp = record[i];
+                            record[i] = record[j];
+                            record[j] = temp;
+                        }
                     }
                 }
             }
+            
+            else
+            {
+                for (int i = 1; i < count; i++)
+                {
+                    dynamic recordOne = record[i];
+                    string valueOne = recordOne[columnNumber];
+                    int x = Int32.Parse(valueOne);
+                    for (int j = 1; j < count; j++)
+                    {
+                        dynamic recordTwo = record[j];
+                        string valueTwo = recordTwo[columnNumber];
+                        int y = Int32.Parse(valueTwo);
+                        //compare which one is greter and swap 
+                        if (x.CompareTo(y) < 0)
+                        {
+
+                            dynamic temp = record[i];
+                            record[i] = record[j];
+                            record[j] = temp;
+                        }
+                    }
+                }
+
+            }
+
             //display the sorted list
             for (int i = 0; i < count; i++)
             {
@@ -143,7 +174,10 @@ namespace stateScensus
             }
             return record;
         }
-        public dynamic readData(string Path, string classDAOname,int jsonForm, int sort, int columnNumber)
+
+    
+
+    public dynamic readData(string Path, string classDAOname,int jsonForm, int sort, int columnNumber,int stringIsCharOrInt)
         {
             //declear number of record is 0
             int numberOfRecord = 0;
@@ -190,7 +224,7 @@ namespace stateScensus
                     if (sort == 0)
                     {
                         //call the sorting function
-                        record = SortTheList(record, columnNumber, fieldCount);
+                        record = SortTheList(record, columnNumber, fieldCount, stringIsCharOrInt);
 
                     }
                     //if user send 0 for output in json format otherwise no
@@ -236,13 +270,15 @@ namespace stateScensus
                     if (sort == 0)
                     {
                         //call the sorting function
-                        record = SortTheList(record, columnNumber, fieldCount);
+                        record = SortTheList(record, columnNumber, fieldCount, stringIsCharOrInt);
 
                     }
                     //if user send 0 for output in json format otherwise no
                     if (jsonForm == 0)
                     {
-                        var jsonFormdata = JsonSerializer.Serialize(record.Values);
+
+
+                        string jsonFormdata = JsonSerializer.Serialize(record.Values);
                         //return data dynamically
                         return (record, numberOfRecord, headers,  jsonFormdata);
 
@@ -263,5 +299,6 @@ namespace stateScensus
             }
         }
 
+       
     }
 }
