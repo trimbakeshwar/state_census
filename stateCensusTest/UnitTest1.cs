@@ -525,15 +525,7 @@ namespace stateCencesTesting
              int ColumnNumber = 0;
              //get first string of record
              string highest = sortedList[rowNumber][ColumnNumber];
-           /* string path = @"D:\trimbak\state analys\StateCensusData.csv";
-            int jasonForm = 0;
-            int sort = 0;
-            int columnNumber = 3;
-            csvData builder = new csvData(path, jasonForm, sort, columnNumber);
-            dynamic output = builder.getRecord();
-            var first = output[1][0];
-            var last = output[29][0];
-           // Assert.AreEqual("Mizoram", last);*/
+          
             Assert.AreEqual("Bihar", highest);
 
         }
@@ -543,16 +535,7 @@ namespace stateCencesTesting
         [Test]
         public void CheckForJsonFormatLeastPopulatedDensityState()
         {
-            /*string path = @"D:\trimbak\state analys\StateCensusData.csv";
-            int jasonForm = 0;
-            int sort = 0;
-            int columnNumber = 3;
-            csvData builder = new csvData(path, jasonForm, sort, columnNumber);
-            dynamic output = builder.getRecord();
-            var first = output[1][0];
-            var last = output[29][0];
-            Assert.AreEqual("Mizoram", first);*/
-
+            
              int jasonForm = 0;
              int sort = 0;
              int columnNumber = 3;
@@ -570,6 +553,55 @@ namespace stateCencesTesting
 
              string lastState = sortedList[1][ColumnNumber];
              Assert.AreEqual("Mizoram", lastState);
+
+        }
+        [Test]
+        public void CheckForJsonFormatLargestAreaState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 2;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            // var output=state.getRecord();
+            int rowNumber = 29;
+            int ColumnNumber = 0;
+            //get first string of record
+            string highest = sortedList[rowNumber][ColumnNumber];
+
+            Assert.AreEqual("Rajasthan", highest);
+
+        }
+        /// <summary>
+        /// check for json formated least populated state state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatsmallestAreaState()
+        {
+
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 2;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //var output=state.getRecord();
+            int ColumnNumber = 0;
+            //get last string of record
+
+            string lastState = sortedList[1][ColumnNumber];
+            Assert.AreEqual("Goa", lastState);
 
         }
 
