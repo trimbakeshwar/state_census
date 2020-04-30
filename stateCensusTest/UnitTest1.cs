@@ -806,7 +806,44 @@ namespace stateCencesTesting
             Assert.AreEqual(51, numberOfRecord);
             
         }
-
+        [Test]
+        public void CheckHighlyPopulatedState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 2;
+            int stringIsCharOrInt = 1;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get first string of record
+           // int row = 1;
+            int column = 1;
+            string first = sortedList[state.getNumberOfRecrd()][column];
+            Assert.AreEqual("California", first);
+        }
+        [Test]
+        public void ChecklessPopulatedState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 2;
+            int stringIsCharOrInt = 1;
+            //call the read data and retun the output dynamically and store in var
+            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //get first string of record
+            int row = 1;
+            int column = 1;
+            string first = sortedList[row][column];
+            Assert.AreEqual("Wyoming", first);
+        }
 
     }
 }
