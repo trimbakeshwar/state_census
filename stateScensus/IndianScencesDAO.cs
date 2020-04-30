@@ -10,11 +10,54 @@ namespace stateScensus
         private string Population;
         private string AreaInSqKm;
         private string DensityPerSqKm;
+        public string this[int i]
+        {
+            get
+            {
+                if (i == 0)
+                {
+                    return State;
+                }
+                else if (i == 1)
+                {
 
-        public string state { set=> State = value; get=> State; }
-        public string population { set => Population = value; get => Population; }
-        public string areaInSqKm { set => AreaInSqKm = value; get => AreaInSqKm; }
-        public string densityPerSqKm { set => DensityPerSqKm = value; get => DensityPerSqKm; }
+                    return Population;
+                }
+                else if (i == 2)
+                {
+
+                    return AreaInSqKm;
+                }
+                else if (i == 3)
+                {
+
+                    return DensityPerSqKm;
+                }
+                return "";
+            }
+            set
+            {
+                if (i == 0)
+                {
+                    State = value;
+                }
+                else if (i == 1)
+                {
+
+                    Population = value;
+                }
+                else if (i == 2)
+                {
+
+                    AreaInSqKm = value;
+                }
+                else if (i == 3)
+                {
+
+                    DensityPerSqKm = value;
+                }
+            }
+        }
 
 
         public stateScencesDataDAO(string[] attributs)
@@ -31,12 +74,58 @@ namespace stateScensus
         private string SrNo;
         private string StateName;
         private string TIN;
-        private string StateCode; 
-        //attributes can access by set and get
-        public string srNo { set=> SrNo = value; get=> SrNo; }
-        public string stateName { set=> StateName = value; get=> StateName; }
-        public string tIN { set=> TIN = value; get=> TIN; }
-        public string stateCode { set => StateCode = value; get=> StateCode; }
+        private string StateCode;
+        //attributes can access by set and get 
+        public string this[int i]
+        {
+            get
+            {
+                if (i == 0)
+                {
+                    return SrNo;
+                }
+                else if (i == 1)
+                {
+
+                    return StateName;
+                }
+                else if (i == 2)
+                {
+
+                    return TIN;
+                }
+                else if (i == 3)
+                {
+
+                    return StateCode;
+                }
+                return "";
+            }
+            set
+            {
+                if (i == 0)
+                {
+                    SrNo = value;
+                }
+                else if (i == 1)
+                {
+
+                    StateName = value;
+                }
+                else if (i == 2)
+                {
+
+                    TIN = value;
+                }
+                else if (i == 3)
+                {
+
+                    StateCode = value;
+                }
+            }
+        }
+
+
         //constructor for initialize the attributes
         //attributes can send form data builer class
         //assign index data of attribute to the veriable
@@ -59,17 +148,116 @@ namespace stateScensus
         private string Land_Area;
         private string Population_Density;
         private string Housing_Density;
-        public string StateId { set => State_Id = value; get => State_Id; }
-        public string state { set => State = value; get => State; }
-        public string population { set => Population = value; get => Population; }
-        public string HousingUnits { set => Housing_Units = value; get => Housing_Units; }
-        public string TotalArea { set => Total_Area = value; get => Total_Area; }
-        public string WaterArea { set => Water_Area = value; get => Water_Area; }
-        public string LandArea { set => Land_Area = value; get => Land_Area; }
-        public string PopulationDensity { set => Population_Density = value; get => Population_Density; }
-        public string HousingDensity { set => Housing_Density = value; get => Housing_Density; }
+        /*  public string StateId { set => State_Id = value; get => State_Id; }
+          public string state { set => State = value; get => State; }
+          public string population { set => Population = value; get => Population; }
+          public string HousingUnits { set => Housing_Units = value; get => Housing_Units; }
+          public string TotalArea { set => Total_Area = value; get => Total_Area; }
+          public string WaterArea { set => Water_Area = value; get => Water_Area; }
+          public string LandArea { set => Land_Area = value; get => Land_Area; }
+          public string PopulationDensity { set => Population_Density = value; get => Population_Density; }
+          public string HousingDensity { set => Housing_Density = value; get => Housing_Density; }*/
+        public string this[int i]
+        {
+            get
+            {
+                if (i == 0)
+                {
+                    return State_Id;
+                }
+                else if (i == 1)
+                {
 
-        public  UScensusDataDAO(string[] attributs)
+                    return State;
+                }
+                else if (i == 2)
+                {
+
+                    return Population;
+                }
+                else if (i == 3)
+                {
+
+                    return Housing_Units;
+                }
+                else if (i == 4)
+                {
+
+                    return Total_Area;
+                }
+                else if (i == 5)
+                {
+
+                    return Water_Area;
+                }
+                else if (i == 6)
+                {
+
+                    return Land_Area;
+                }
+                else if (i == 7)
+                {
+
+                    return Population_Density;
+                }
+                else if (i == 8)
+                {
+
+                    return Housing_Density;
+                }
+                return "";
+
+            }
+            set
+            {
+                if (i == 0)
+                {
+                    State_Id = value;
+                }
+                else if (i == 1)
+                {
+
+                    State = value;
+                }
+                else if (i == 2)
+                {
+
+                    Population = value;
+                }
+                else if (i == 3)
+                {
+
+                    Housing_Units = value;
+                }
+                else if (i == 4)
+                {
+
+                    Total_Area = value;
+                }
+                else if (i == 5)
+                {
+
+                    Water_Area = value;
+                }
+                else if (i == 6)
+                {
+
+                    Land_Area = value;
+                }
+                else if (i == 7)
+                {
+
+                    Population_Density = value;
+                }
+                else if (i == 8)
+                {
+
+                    Housing_Density = value;
+                }
+            }
+        }
+
+        public UScensusDataDAO(string[] attributs)
         {
             this.State_Id = attributs[0];
             this.State = attributs[1];
