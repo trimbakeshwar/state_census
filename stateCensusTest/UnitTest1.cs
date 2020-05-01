@@ -947,6 +947,20 @@ namespace stateCencesTesting
             Assert.AreEqual("District of Columbia", lastState);
 
         }
+        [Test]
+        public void mostPopulusStateFromIndiaAndUs()
+        {
+            string pathOfUsCencus= @"D:\trimbak\state analys\USCensusData.csv";
+            int columNumberforUSScensus=6;
+            string pathofStateScensus= @"D:\trimbak\state analys\StateCensusData.csv";
+            int columNumberforIndianScensus=3;
+            int StringIsCharOrInt=1;
+            CsvBuilder build = new CsvBuilder();
+            var outPut=build.SortigOnTwoFile(pathOfUsCencus, columNumberforUSScensus, pathofStateScensus, columNumberforIndianScensus, StringIsCharOrInt);
+           
+            Assert.AreEqual("District of Columbia", outPut);
+
+        }
 
 
     }

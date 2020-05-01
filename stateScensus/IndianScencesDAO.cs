@@ -148,15 +148,7 @@ namespace stateScensus
         private string Land_Area;
         private string Population_Density;
         private string Housing_Density;
-        /*  public string StateId { set => State_Id = value; get => State_Id; }
-          public string state { set => State = value; get => State; }
-          public string population { set => Population = value; get => Population; }
-          public string HousingUnits { set => Housing_Units = value; get => Housing_Units; }
-          public string TotalArea { set => Total_Area = value; get => Total_Area; }
-          public string WaterArea { set => Water_Area = value; get => Water_Area; }
-          public string LandArea { set => Land_Area = value; get => Land_Area; }
-          public string PopulationDensity { set => Population_Density = value; get => Population_Density; }
-          public string HousingDensity { set => Housing_Density = value; get => Housing_Density; }*/
+
         public string this[int i]
         {
             get

@@ -21,7 +21,10 @@ namespace stateScensus
         public int sort;
         public int columnNumber;
         public int stringIsCharOrInt;
+        public CsvBuilder()
+        {
 
+        }
         public CsvBuilder(string path, int jsonForm, int sort, int columnNumber,int stringIsCharOrInt)
         {
             this.Path = path;
@@ -237,6 +240,33 @@ namespace stateScensus
             }
         }
 
+        public dynamic SortigOnTwoFile(string pathOfUsCencus,int columNumberforUSScensus, string pathofStateScensus, int columNumberforIndianScensus,int StringIsCharOrInt)
+        {
+            StreamReader readUsData = new StreamReader(pathOfUsCencus);
+            CsvReader UsData = new CsvReader(readUsData, true);
+            int fieldCount = UsData.FieldCount;
+            StreamReader readIndiaData = new StreamReader(pathofStateScensus);
+            CsvReader IndiaData = new CsvReader(readIndiaData, true);
+            int numberOfField = IndiaData.FieldCount;
+            int i = -1;
+            dynamic USdataList = UsData.ToDictionary(y => i = i + 1, y => new UScensusDataDAO(y));
+             i = -1;
+            dynamic IndiadataList = IndiaData.ToDictionary(y => i = i + 1, y => new stateScencesDataDAO(y));
+            dynamic SortedUSList = SortTheList(USdataList, columNumberforUSScensus, fieldCount, StringIsCharOrInt);
+            dynamic SortedIndianList = SortTheList(IndiadataList, columNumberforIndianScensus, numberOfField, StringIsCharOrInt);
+            double USMostPopulusDensity =double.Parse(SortedUSList[1][6]);
+            double IndianMostPopulusDensity = double.Parse(SortedIndianList[1][3]);
+            if(USMostPopulusDensity> IndianMostPopulusDensity)
+            {
+                return SortedUSList[1][1];
+            }
+            else
+            {
+                return SortedIndianList[1][0];
+            }
+            
+                
+        }
        
     }
 }
