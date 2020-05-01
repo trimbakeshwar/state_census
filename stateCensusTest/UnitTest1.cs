@@ -612,7 +612,7 @@ namespace stateCencesTesting
     public class TestsForCsvCodeDataByCsvBuilder
     {
         //path of file StateCensusData.csv 
-       static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
+        static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
 
         //create a object of stateCensusAnalyser class 
 
@@ -710,7 +710,7 @@ namespace stateCencesTesting
             //send 1 for not sorting and not json format
             int jasonForm = 1;
             int sort = 1;
-            int columnNumber = 3; 
+            int columnNumber = 3;
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
@@ -719,12 +719,12 @@ namespace stateCencesTesting
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(37, numberOfRecord);
-             string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
-      
-            
+            string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
+
+
             //call the read data and retun the output dynamically and store in var
             CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
-            
+
             var numberOfRecord1 = state2.getNumberOfRecrd();
             //if same then pass
             Assert.AreEqual(29, numberOfRecord1);
@@ -750,7 +750,7 @@ namespace stateCencesTesting
             int column = 3;
             string first = sortedList[row][column];
             Assert.AreEqual("AD", first);
-           
+
         }
         /// <summary>
         /// check for json formated first state
@@ -762,18 +762,21 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 3;
             int stringIsCharOrInt = 0;
-            //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
-            //get json formated output
-            var sortedJsonFile = state.getJesonFormatRecord();
-            //deserialize objects to list
-            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
-            //get last string of record
-            int column = 3;
-            string lastState = sortedList[state.getNumberOfRecrd()][column];
+             //call the read data and retun the output dynamically and store in var
+             CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+             //get json formated output
+             var sortedJsonFile = state.getJesonFormatRecord();
+             //deserialize objects to list
+             var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+             //get last string of record
+             int column = 3;
+             string lastState = sortedList[state.getNumberOfRecrd()][column];
+            
             Assert.AreEqual("WB", lastState);
 
         }
+       // [Test]
+          
     }
     public class TestForUsCensusData
     {
