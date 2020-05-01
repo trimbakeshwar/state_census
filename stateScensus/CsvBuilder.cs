@@ -115,7 +115,7 @@ namespace stateScensus
         
     
 
-    public dynamic readData(string Path, string classDAOname,int jsonForm, int sort, int columnNumber,int stringIsCharOrInt)
+        public dynamic readData(string Path, string classDAOname,int jsonForm, int sort, int columnNumber,int stringIsCharOrInt)
         {
             //declear number of record is 0
             int numberOfRecord = 0;

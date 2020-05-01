@@ -780,7 +780,7 @@ namespace stateCencesTesting
     }
     public class TestForUsCensusData
     {
-        static string PathOfCsvStateCode = @"D:\trimbak\state analys\USCensusData.csv";
+        static string Path = @"D:\trimbak\state analys\USCensusData.csv";
 
         //create a object of stateCensusAnalyser class 
 
@@ -802,7 +802,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get number of record from csv code
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
@@ -817,7 +817,7 @@ namespace stateCencesTesting
             int columnNumber = 2;
             int stringIsCharOrInt = 1;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -836,7 +836,7 @@ namespace stateCencesTesting
             int columnNumber = 2;
             int stringIsCharOrInt = 1;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -847,6 +847,107 @@ namespace stateCencesTesting
             string first = sortedList[row][column];
             Assert.AreEqual("Wyoming", first);
         }
+       
+        
+        [Test]
+        public void CheckForJsonFormatMostPopulatedDensityState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 7;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            // var output=state.getRecord();
+            int rowNumber = state.getNumberOfRecrd();
+            int ColumnNumber = 1;
+            //get first string of record
+            string highest = sortedList[rowNumber][ColumnNumber];
+
+            Assert.AreEqual("District of Columbia", highest);
+
+        }
+        /// <summary>
+        /// check for json formated least populated state state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatLeastPopulatedDensityState()
+        {
+
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 7;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //var output=state.getRecord();
+            int ColumnNumber = 1;
+            //get last string of record
+
+            string lastState = sortedList[1][ColumnNumber];
+            Assert.AreEqual("Alaska", lastState);
+
+        }
+        [Test]
+        public void CheckForJsonFormatLargestAreaState()
+        {
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 4;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            // var output=state.getRecord();
+            int rowNumber = state.getNumberOfRecrd();
+            int ColumnNumber = 1;
+            //get first string of record
+            string highest = sortedList[rowNumber][ColumnNumber];
+
+            Assert.AreEqual("Alaska", highest);
+
+        }
+        /// <summary>
+        /// check for json formated least populated state state
+        /// </summary>
+        [Test]
+        public void CheckForJsonFormatsmallestAreaState()
+        {
+
+            int jasonForm = 0;
+            int sort = 0;
+            int columnNumber = 4;
+            //if sorting column  is alphabetical then send 0 otherwise send 1
+            int stringIsCharOrInt = 1;
+            //call the constructor
+            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //get json formated output
+            var sortedJsonFile = state.getJesonFormatRecord();
+            //deserialize objects to list
+            var sortedList = JsonConvert.DeserializeObject(sortedJsonFile);
+            //var output=state.getRecord();
+            int ColumnNumber = 1;
+            //get last string of record
+
+            string lastState = sortedList[1][ColumnNumber];
+            Assert.AreEqual("District of Columbia", lastState);
+
+        }
+
 
     }
 }

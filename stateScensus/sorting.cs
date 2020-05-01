@@ -39,12 +39,12 @@ namespace stateScensus
                 {
                     dynamic recordOne = record[i];
                     string valueOne = recordOne[columnNumber];
-                    int x = Int32.Parse(valueOne);
+                    double x = double.Parse(valueOne);
                     for (int j = 1; j < count; j++)
                     {
                         dynamic recordTwo = record[j];
                         string valueTwo = recordTwo[columnNumber];
-                        int y = Int32.Parse(valueTwo);
+                        double y = double.Parse(valueTwo);
                         //compare which one is greter and swap 
                         if (x.CompareTo(y) < 0)
                         {
