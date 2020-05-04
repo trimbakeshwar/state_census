@@ -239,23 +239,42 @@ namespace stateScensus
                 throw new Exception(e.Message);
             }
         }
-
+        /// <summary>
+        /// load two files at a time
+        /// </summary>
+        /// <param name="pathOfUsCencus"> path of us sensus</param>
+        /// <param name="columNumberforUSScensus"> sorting takes on column number</param>
+        /// <param name="pathofStateScensus"> path of indian sensus</param>
+        /// <param name="columNumberforIndianScensus">sorting takes on column number</param>
+        /// <param name="StringIsCharOrInt">if data in column is string then 0 other wise 1</param>
+        /// <returns></returns>
         public dynamic SortigOnTwoFile(string pathOfUsCencus,int columNumberforUSScensus, string pathofStateScensus, int columNumberforIndianScensus,int StringIsCharOrInt)
         {
+            //load us data
             StreamReader readUsData = new StreamReader(pathOfUsCencus);
             CsvReader UsData = new CsvReader(readUsData, true);
+            //count field
             int fieldCount = UsData.FieldCount;
+            //load indian scensus data
             StreamReader readIndiaData = new StreamReader(pathofStateScensus);
             CsvReader IndiaData = new CsvReader(readIndiaData, true);
+            //number of field
             int numberOfField = IndiaData.FieldCount;
             int i = -1;
+            //store data in dictionary
             dynamic USdataList = UsData.ToDictionary(y => i = i + 1, y => new UScensusDataDAO(y));
              i = -1;
+            //store data in dictionary
             dynamic IndiadataList = IndiaData.ToDictionary(y => i = i + 1, y => new stateScencesDataDAO(y));
+            //call sorting method and store sorted data in file
             dynamic SortedUSList = SortTheList(USdataList, columNumberforUSScensus, fieldCount, StringIsCharOrInt);
+            //call sorting method and store sorted data in file
             dynamic SortedIndianList = SortTheList(IndiadataList, columNumberforIndianScensus, numberOfField, StringIsCharOrInt);
+            //sorted first input density onvert in double for comarision
             double USMostPopulusDensity =double.Parse(SortedUSList[1][6]);
+            //sorted first input density onvert in double for comarision
             double IndianMostPopulusDensity = double.Parse(SortedIndianList[1][3]);
+            //if us data greter then return us state otherwise return indian state
             if(USMostPopulusDensity> IndianMostPopulusDensity)
             {
                 return SortedUSList[1][1];

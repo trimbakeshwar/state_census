@@ -4,12 +4,16 @@ using System.Text;
 
 namespace stateScensus
 {
+    /// <summary>
+    /// create dao class stateScencesDataDAO
+    /// </summary>
     class stateScencesDataDAO
     {
         private string State;
         private string Population;
         private string AreaInSqKm;
         private string DensityPerSqKm;
+        //set and get data according to index
         public string this[int i]
         {
             get
@@ -58,7 +62,7 @@ namespace stateScensus
                 }
             }
         }
-
+        //create constructor for initialize
 
         public stateScencesDataDAO(string[] attributs)
         {
@@ -69,6 +73,9 @@ namespace stateScensus
         }
 
     }
+    /// <summary>
+    /// dao for state scensus code
+    /// </summary>
     class stateScensusCodeDAO
     {
         private string SrNo;
@@ -137,6 +144,9 @@ namespace stateScensus
             StateCode = attributs[3];
         }
     }
+    /// <summary>
+    /// dao for us scensus for accessing file data 
+    /// </summary>
     class UScensusDataDAO
     {
         private string State_Id;
@@ -148,7 +158,7 @@ namespace stateScensus
         private string Land_Area;
         private string Population_Density;
         private string Housing_Density;
-
+        //set data and get data according to index
         public string this[int i]
         {
             get

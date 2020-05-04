@@ -11,7 +11,7 @@ namespace stateCencesTesting
         //path of file StateCensusData.csv
         static string pathStateCensusData = @"D:\trimbak\state analys\StateCensusData.csv";
         //create a object of stateCensusAnalyser class 
-        stateCensusAnalyser read = new stateCensusAnalyser(pathStateCensusData);
+        BaseStateCensus read = new BaseStateCensus(pathStateCensusData);
         [SetUp]
         public void Setup()
         {
@@ -38,7 +38,7 @@ namespace stateCencesTesting
                 //give the  path of not available csv file
                 string path = @"D:\trimbak\state analys\StatesusData.csv";
                 //call the readmethod and it return the number of record
-                stateCensusAnalyser ReadForStateCensus = new stateCensusAnalyser(path);
+                BaseStateCensus ReadForStateCensus = new BaseStateCensus(path);
                 int record = ReadForStateCensus.ReadMethod(',');
             }
             catch (StateCensusException e)
@@ -57,7 +57,7 @@ namespace stateCencesTesting
                 //chenge file type csv to txt and check
                 string path = @"D:\trimbak\state analys\StateCensusData.txt";
                 //send the file path
-                stateCensusAnalyser ReadForStateCensus = new stateCensusAnalyser(path);
+                BaseStateCensus ReadForStateCensus = new BaseStateCensus(path);
                 //call the readmethod and it return the number of record
                 int record = ReadForStateCensus.ReadMethod(',');
             }
@@ -151,7 +151,7 @@ namespace stateCencesTesting
         //path of file StateCode.csv
         static string PathOfCsvStateCode = @"D:\trimbak\state analys\StateCode.csv";
         //create object of csvState class
-        CsvState ReadForCsvStateCode = new CsvState(PathOfCsvStateCode);
+        BaseStateCensus ReadForCsvStateCode = new BaseStateCensus(PathOfCsvStateCode);
         [SetUp]
         public void Setup()
         {
@@ -178,7 +178,7 @@ namespace stateCencesTesting
                 //give the  path of not existing csv file
                 string Path = @"D:\trimbak\state analys\Statee.csv";
                 //create object fo csv reder by using local file path 
-                CsvState ReadForCsvState = new CsvState(Path);
+                BaseStateCensus ReadForCsvState = new BaseStateCensus(Path);
                 //call the readmethod and it return the number of record
                 int record = ReadForCsvState.ReadMethod(',');
             }
@@ -198,7 +198,7 @@ namespace stateCencesTesting
                 //chenge file type csv to txt and check
                 string Path = @"D:\trimbak\state analys\StateCode.txt";
                 //create object fo csv reder by using local file path 
-                CsvState ReadForCsvState = new CsvState(Path);
+                BaseStateCensus ReadForCsvState = new BaseStateCensus(Path);
                 //call the readmethod and it return the number of record
                 int record = ReadForCsvState.ReadMethod( ',');
             }
@@ -324,7 +324,7 @@ namespace stateCencesTesting
             //call the read data and retun the output dynamically and store in var
             //return tuple this is new concept to return mulltiple values
             //and get pertcular value Item1,Item2,Item3,Item4
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             var output = state.getHeaders();
 
             //my itoe three is heeders name
@@ -352,7 +352,7 @@ namespace stateCencesTesting
             //if it is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //var output = builder.readData(pathStateCensusData, jasonForm, sort, columnNumber);
             //second output is store in firststate first sorted record
             int rowNumber = 0;
@@ -378,7 +378,7 @@ namespace stateCencesTesting
             //if it is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort,columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort,columnNumber, stringIsCharOrInt);
             //geting number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //geting sorted record
@@ -403,7 +403,7 @@ namespace stateCencesTesting
             //if it is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //itome three is number of record
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
@@ -427,7 +427,7 @@ namespace stateCencesTesting
             //call the constructor
             int stringIsCharOrInt = 0;
             //call readdata and return output store in var output 
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -451,7 +451,7 @@ namespace stateCencesTesting
             //if it is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call constructor of csv file
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -471,7 +471,7 @@ namespace stateCencesTesting
             //call the constructor
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -495,7 +495,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call constructor of csv file
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -515,7 +515,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -542,7 +542,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
              //deserialize objects to list
@@ -564,7 +564,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -591,7 +591,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -637,7 +637,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //geting heders name by this function
             var output = state.getHeaders();
 
@@ -666,7 +666,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get sorted record from csv code
             var firstState = state.getRecord();
             int row = 0;
@@ -690,7 +690,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //last record index get from number of record
             var lastRecordIndex = state.getNumberOfRecrd();
             //get sorted list last state in alphabetical order
@@ -714,7 +714,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get number of record from csv code
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
@@ -723,7 +723,7 @@ namespace stateCencesTesting
 
 
             //call the read data and retun the output dynamically and store in var
-            CsvCode state2 = new CsvCode(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state2 = new CsvFactory(pathStateCensusData, jasonForm, sort, columnNumber, stringIsCharOrInt);
 
             var numberOfRecord1 = state2.getNumberOfRecrd();
             //if same then pass
@@ -740,7 +740,7 @@ namespace stateCencesTesting
             int columnNumber = 3;
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -762,8 +762,8 @@ namespace stateCencesTesting
             int sort = 0;
             int columnNumber = 3;
             int stringIsCharOrInt = 0;
-             //call the read data and retun the output dynamically and store in var
-             CsvCode state = new CsvCode(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            //call the read data and retun the output dynamically and store in var
+            CsvFactory state = new CsvFactory(PathOfCsvStateCode, jasonForm, sort, columnNumber, stringIsCharOrInt);
              //get json formated output
              var sortedJsonFile = state.getJesonFormatRecord();
              //deserialize objects to list
@@ -802,7 +802,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 0;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get number of record from csv code
             var numberOfRecord = state.getNumberOfRecrd();
             //if same then pass
@@ -817,7 +817,7 @@ namespace stateCencesTesting
             int columnNumber = 2;
             int stringIsCharOrInt = 1;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -836,7 +836,7 @@ namespace stateCencesTesting
             int columnNumber = 2;
             int stringIsCharOrInt = 1;
             //call the read data and retun the output dynamically and store in var
-            CsvCode state = new CsvCode(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -858,7 +858,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -885,7 +885,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -907,7 +907,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list
@@ -934,7 +934,7 @@ namespace stateCencesTesting
             //if sorting column  is alphabetical then send 0 otherwise send 1
             int stringIsCharOrInt = 1;
             //call the constructor
-            csvData state = new csvData(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
+            CsvFactory state = new CsvFactory(Path, jasonForm, sort, columnNumber, stringIsCharOrInt);
             //get json formated output
             var sortedJsonFile = state.getJesonFormatRecord();
             //deserialize objects to list

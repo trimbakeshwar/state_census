@@ -26,17 +26,20 @@ namespace stateScensus
                 int fieldCount = csv.FieldCount;
                 if (classname.Contains("USCensusData"))
                 {
-                   // dataFile=csv.ToDictionary
-                    dataFile=csv.ToDictionary(x => i = i + 1, x => new stateScensusCodeDAO(x));
+                    //if clas name contains USCensusData  then add data in datafile 
+                    dataFile = csv.ToDictionary(x => i = i + 1, x => new stateScensusCodeDAO(x));
                 }
                 else if (classname.Contains("StateCode"))
                 {
+                    //if clas name contains StateCode  then add data in datafile 
                     dataFile = csv.ToDictionary(x => i = i + 1, x => new stateScensusCodeDAO(x));
                 }
                 else if (classname.Contains("StateCensusData"))
                 {
+                    //if clas name contains StateCensusData  then add data in datafile 
                     dataFile = csv.ToDictionary(x => i = i + 1, x => new stateScencesDataDAO(x));
                 }
+                    //if number of record is zero then throw exception file is empty
                     //if number of record is zero then throw exception file is empty
                     if (numberOfRecord == 0)
                     {

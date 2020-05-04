@@ -7,7 +7,7 @@ namespace sate_Censes
 {
     public class BaseStateCensus
     {
-        string Path { get; set; }
+        string Path;
         public BaseStateCensus(string Path)
         {
             this.Path = Path;
@@ -101,6 +101,10 @@ namespace sate_Censes
             catch (StateCensusException e)
             {
                 throw new StateCensusException(StateCensusException.ExceptionType.HEADER_NAME_NOT_SAME, e.Message);
+            }
+            catch(FileNotFoundException e )
+            {
+                throw new Exception(e.Message);
             }
         }
     }
